@@ -2,16 +2,38 @@ package main
 
 import "fmt"
 
-const englishHelloPrefix = "Hello, "
+const (
+	english = "English"
+	spanish = "Spanish"
+	french  = "French"
 
-func Hello(name string) string {
+	englishHelloPrefix = "Hello, "
+	spanishHelloPrefix = "¡Hola, "
+	frenchHelloPrefix  = "Bonjour, "
+)
+
+func Hello(name, lang string) string {
 	if (name == "") {
 		name = "World"
 	}
-	return englishHelloPrefix + name + "!"
+	name = name + "!"
+
+	return greetingPrefix(lang) + name
+}
+
+func greetingPrefix(lang string) (prefix string) {
+	switch lang {
+	case french:
+		prefix = frenchHelloPrefix
+	case spanish:
+		prefix = spanishHelloPrefix
+	default:
+		prefix = englishHelloPrefix
+	}
+	return
 }
 
 // https://quii.gitbook.io/learn-go-with-tests/go-fundamentals/hello-world
 func main() {
-	fmt.Println(Hello("world"))
+	fmt.Println(Hello("world", ""))
 }
