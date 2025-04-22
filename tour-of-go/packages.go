@@ -40,7 +40,9 @@ import "packages/flowcontrol"
 func playingWithFlowControl() {
 	// flowcontrol.ExampleFor()
 	// flowcontrol.ExampleIf()
-	flowcontrol.ExerciseLoop()
+	// flowcontrol.ExerciseLoop()
+	// flowcontrol.ExampleSwitch()
+	flowcontrol.ExampleDefer()
 }
 
 func main() {

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"runtime"
+	"time"
 )
 
 func ExampleFor() {
@@ -38,4 +40,40 @@ func sqrt(x float64) float64 {
 
 func ExerciseLoop() {
 	fmt.Println(sqrt(2))
+}
+
+func ExampleSwitch() {
+	fmt.Println("Go runs on ")
+	switch os := runtime.GOOS; os {
+	case "darwin":
+		fmt.Println("macOS.")
+	case "linux":
+		fmt.Println("Linux.")
+	default:
+		fmt.Printf("%s.\n", os)
+	}
+
+	fmt.Println("When's Saturday?")
+	today := time.Now().Weekday()
+	switch time.Saturday {
+	case today + 0:
+		fmt.Println("Today.")
+	case today + 1:
+		fmt.Println("Tomorrow.")
+	case today + 2:
+		fmt.Println("In two days.")
+	default:
+		fmt.Println("Too far away.")
+	}
+}
+
+func exampleDeferOtherFunction() {
+	defer fmt.Println("defer other function")
+	fmt.Println("end other function")
+}
+
+func ExampleDefer() {
+	defer fmt.Println("defer")
+	fmt.Println("end")
+	exampleDeferOtherFunction()
 }
