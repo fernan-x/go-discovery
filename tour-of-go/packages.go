@@ -1,6 +1,6 @@
 package main
 
-import "packages/flowcontrol"
+import "packages/pointers"
 
 // func chapter1() {
 // 	// Importing packages
@@ -37,15 +37,23 @@ import "packages/flowcontrol"
 // 	fmt.Println(a, b)
 // }
 
-func playingWithFlowControl() {
-	// flowcontrol.ExampleFor()
-	// flowcontrol.ExampleIf()
-	// flowcontrol.ExerciseLoop()
-	// flowcontrol.ExampleSwitch()
-	flowcontrol.ExampleDefer()
+// func playingWithFlowControl() {
+// 	flowcontrol.ExampleFor()
+// 	flowcontrol.ExampleIf()
+// 	flowcontrol.ExerciseLoop()
+// 	flowcontrol.ExampleSwitch()
+// 	flowcontrol.ExampleDefer()
+// }
+
+func playingWithPointers() {
+	// pointers.ExamplePointer()
+	// pointers.ExampleStruct()
+	// pointers.ExampleStructLiteral()
+	pointers.ExampleArray()
 }
 
 func main() {
 	// playingWithPackages()
-	playingWithFlowControl()
+	// playingWithFlowControl()
+	playingWithPointers()
 }
