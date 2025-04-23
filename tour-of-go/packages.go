@@ -49,7 +49,11 @@ func playingWithPointers() {
 	// pointers.ExamplePointer()
 	// pointers.ExampleStruct()
 	// pointers.ExampleStructLiteral()
-	pointers.ExampleArray()
+	// pointers.ExampleArray()
+	// pointers.ExampleSlice()
+	// pointers.ExampleSliceLength()
+	// pointers.ExampleSliceNil()
+	pointers.ExampleMakeSlice()
 }
 
 func main() {
