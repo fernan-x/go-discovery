@@ -101,5 +101,28 @@ func ExampleSliceNil() {
 }
 
 func ExampleMakeSlice() {
-	
+	a := make([]int, 5)
+	printSlice(a)
+
+	b := make([]int, 0, 5)
+	printSlice(b)
+}
+
+func ExampleSliceOfSlices() {
+	board := [][]string{
+		[]string{"_", "_", "_" },
+		[]string{"_", "_", "_" },
+		[]string{"_", "_", "_" },
+	}
+
+	// fmt.Printf("%v\n", board)
+	board[0][0] = "X"
+	board[2][2] = "O"
+	board[1][2] = "X"
+	board[1][0] = "O"
+	board[0][2] = "X"
+
+	for _, row := range board {
+		fmt.Println(row)
+	}
 }
