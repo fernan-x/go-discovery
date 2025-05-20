@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fernan-x/expense-tracker/internal/infra"
-	"github.com/fernan-x/expense-tracker/internal/usecase"
+	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 )
 
 func main() {
-	// repo := infra.NewInMemoryExpenseRepository()
-	repo := infra.NewFailingExpenseRepositoryTest()
-	uc := usecase.NewAddExpenseUseCase(repo)
+	// repo := expense_infra.NewInMemoryExpenseRepository()
+	repo := expense_infra.NewFailingExpenseRepositoryTest()
+	uc := expense_usecase.NewAddExpenseUseCase(repo)
 
 	err := uc.Execute("Lunch", 12.90)
 	if err != nil {
