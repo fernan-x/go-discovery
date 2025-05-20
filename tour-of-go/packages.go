@@ -59,8 +59,14 @@ func playingWithPointers() {
 	pointers.ExercisePointers()
 }
 
+func playingWithMaps() {
+	// pointers.ExampleMap()
+	pointers.ExerciseWordCount()
+}
+
 func main() {
 	// playingWithPackages()
 	// playingWithFlowControl()
-	playingWithPointers()
+	// playingWithPointers()
+	playingWithMaps()
 }
