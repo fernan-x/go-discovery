@@ -32,3 +32,15 @@ func TestAddExpense(t *testing.T) {
 	assert.Equal(t, "Dinner", expenses[1].Title)
 	assert.Equal(t, 20.00, expenses[1].Amount)
 }
+
+func TestAddExpenseWithError(t *testing.T) {
+	repo := infra.NewFailingExpenseRepositoryTest()
+	uc := usecase.NewAddExpenseUseCase(repo)
+
+	err := uc.Execute("Lunch", 12.90)
+	assert.Error(t, err)
+
+	expenses, err := repo.GetAll()
+	assert.Equal(t, 0, len(expenses))
+	assert.Error(t, err)
+}
