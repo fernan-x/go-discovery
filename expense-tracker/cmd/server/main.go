@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
+	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +18,16 @@ func main() {
 		})
 	})
 
-	router.GET("/expenses", expense_http.GetAllExpenses)
+	expenseRepo := expense_infra.NewInMemoryExpenseRepository()
+	getAllExpenseUC := expense_usecase.NewGetAllExpenseUseCase(expenseRepo)
+	addExpenseUC := expense_usecase.NewAddExpenseUseCase(expenseRepo)
+	handler := expense_http.ExpenseHandler{
+		GetAllExpenseUC: getAllExpenseUC,
+		AddExpenseUC: addExpenseUC,
+	}
+
+	router.GET("/expenses", handler.GetAllExpenses)
+	router.POST("/expenses", handler.AddExpense)
 
 	router.Run()
 }
