@@ -54,7 +54,9 @@ func playingWithPointers() {
 	// pointers.ExampleSliceLength()
 	// pointers.ExampleSliceNil()
 	// pointers.ExampleMakeSlice()
-	pointers.ExampleSliceOfSlices()
+	// pointers.ExampleSliceOfSlices()
+	// pointers.ExampleAppendSlices()
+	pointers.ExercisePointers()
 }
 
 func main() {

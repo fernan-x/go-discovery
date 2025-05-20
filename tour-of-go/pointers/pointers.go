@@ -126,3 +126,14 @@ func ExampleSliceOfSlices() {
 		fmt.Println(row)
 	}
 }
+
+func ExampleAppendSlices() {
+	var a []int
+	printSlice(a)
+
+	a = append(a, 0)
+	printSlice(a)
+
+	a = append(a, 1, 2, 3)
+	printSlice(a)
+}
