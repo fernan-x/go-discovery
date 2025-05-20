@@ -1,35 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	"net/http"
 
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// repo := expense_infra.NewInMemoryExpenseRepository()
-	repo := expense_infra.NewFailingExpenseRepositoryTest()
-	uc := expense_usecase.NewAddExpenseUseCase(repo)
+	router := gin.Default()
 
-	err := uc.Execute("Lunch", 12.90)
-	if err != nil {
-		fmt.Printf("Error adding expense: %v\n", err)
-		os.Exit(1)
-	}
+	router.GET("/status", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "ok",
+		})
+	})
 
-	err = uc.Execute("Dinner", 20.00)
-	if err != nil {
-		fmt.Printf("Error adding expense: %v\n", err)
-		os.Exit(1)
-	}
+	router.GET("/expenses", expense_http.GetAllExpenses)
 
-	all, err := repo.GetAll()
-	if err != nil {
-		fmt.Printf("Error getting expenses: %v\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Println(all)
+	router.Run()
 }
