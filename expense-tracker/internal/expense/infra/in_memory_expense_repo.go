@@ -22,4 +22,3 @@ func (r *InMemoryExpenseRepository) Create(e expense_domain.Expense) error {
 func (r *InMemoryExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
 	return r.expenses, nil
 }
-
