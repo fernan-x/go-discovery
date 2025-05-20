@@ -10,6 +10,10 @@ First GO package using the method from the hello package
 
 A more complex project to start playing with go-pg
 
+## Expense tracker
+
+A simple project to play in depth with go
+
 ## Links
 
 - https://go.dev/tour/welcome/1
