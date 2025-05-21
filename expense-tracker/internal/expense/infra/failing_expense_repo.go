@@ -21,3 +21,7 @@ func (r *FailingExpenseRepositoryTest) Create(e expense_domain.Expense) error {
 func (r *FailingExpenseRepositoryTest) GetAll() ([]expense_domain.Expense, error) {
 	return nil, errors.New("Error getting all expenses")
 }
+
+func (r *FailingExpenseRepositoryTest) Delete(id string) error {
+	return errors.New("Error deleting expense")
+}

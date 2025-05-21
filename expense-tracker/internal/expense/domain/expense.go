@@ -12,4 +12,5 @@ type Expense struct {
 type ExpenseRepository interface {
 	Create(e Expense) error
 	GetAll() ([]Expense, error)
+	Delete(id string) error
 }

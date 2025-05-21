@@ -1,6 +1,10 @@
 package expense_infra
 
-import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+import (
+	"errors"
+
+	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+)
 
 type InMemoryExpenseRepository struct {
 	expenses []expense_domain.Expense
@@ -21,4 +25,16 @@ func (r *InMemoryExpenseRepository) Create(e expense_domain.Expense) error {
 
 func (r *InMemoryExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
 	return r.expenses, nil
+}
+
+func (r *InMemoryExpenseRepository) Delete(id string) error {
+	for i, e := range r.expenses {
+		if e.ID == id {
+			// Delete the element at index i
+			r.expenses = append(r.expenses[:i], r.expenses[i+1:]...)
+			return nil
+		}
+	}
+
+	return errors.New("Element with id " + id + " not found")
 }
