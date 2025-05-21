@@ -1,4 +1,4 @@
-package test
+package expense_usecase_test
 
 import (
 	"testing"

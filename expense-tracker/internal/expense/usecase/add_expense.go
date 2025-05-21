@@ -7,6 +7,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type AddExpenseUseCaseInterface interface {
+	Execute(title string, amount float64) error
+}
+var _ AddExpenseUseCaseInterface = &AddExpenseUseCase{}
+
 type AddExpenseUseCase struct {
 	repo expense_domain.ExpenseRepository
 }
@@ -14,6 +19,7 @@ type AddExpenseUseCase struct {
 func NewAddExpenseUseCase(repo expense_domain.ExpenseRepository) *AddExpenseUseCase {
 	return &AddExpenseUseCase{repo}
 }
+
 
 // Method with pointer receiver (like method in OOP)
 func (u *AddExpenseUseCase) Execute(title string, amount float64) error {
