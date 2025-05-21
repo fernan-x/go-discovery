@@ -21,13 +21,16 @@ func main() {
 	expenseRepo := expense_infra.NewInMemoryExpenseRepository()
 	getAllExpenseUC := expense_usecase.NewGetAllExpenseUseCase(expenseRepo)
 	addExpenseUC := expense_usecase.NewAddExpenseUseCase(expenseRepo)
+	deleteExpenseUC := expense_usecase.NewDeleteExpenseUseCase(expenseRepo)
 	handler := expense_http.ExpenseHandler{
 		GetAllExpenseUC: getAllExpenseUC,
 		AddExpenseUC: addExpenseUC,
+		DeleteExpenseUC: deleteExpenseUC,
 	}
 
 	router.GET("/expenses", handler.GetAllExpenses)
 	router.POST("/expenses", handler.AddExpense)
+	router.DELETE("/expenses/:id", handler.DeleteExpense)
 
 	router.Run()
 }
