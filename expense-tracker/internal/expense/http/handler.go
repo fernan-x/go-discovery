@@ -1,6 +1,7 @@
 package expense_http
 
 import (
+	"fmt"
 	"net/http"
 
 	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
@@ -9,7 +10,7 @@ import (
 )
 
 type ExpenseHandler struct {
-	GetAllExpenseUC *expense_usecase.GetAllExpenseUseCase
+	GetAllExpenseUC expense_usecase.GetAllExpenseUseCaseInterface
 	AddExpenseUC    expense_usecase.AddExpenseUseCaseInterface
 }
 
@@ -19,6 +20,7 @@ func (u *ExpenseHandler) GetAllExpenses(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, httpresponse.NewErrorResponse(err.Error()))
 		return
 	}
+	fmt.Printf("Expenses: %v\n", expenses)
 	c.JSON(http.StatusOK, httpresponse.NewSuccessResponse(expenses))
 }
 

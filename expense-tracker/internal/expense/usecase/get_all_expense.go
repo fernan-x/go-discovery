@@ -2,6 +2,12 @@ package expense_usecase
 
 import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 
+type GetAllExpenseUseCaseInterface interface {
+	Execute() ([]expense_domain.Expense, error)
+}
+
+var _ GetAllExpenseUseCaseInterface = &GetAllExpenseUseCase{}
+
 type GetAllExpenseUseCase struct {
 	repo expense_domain.ExpenseRepository
 }
