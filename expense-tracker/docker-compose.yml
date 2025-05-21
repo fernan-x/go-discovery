@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: pg_expense
+    environment:
+      POSTGRES_DB: expense_db
+      POSTGRES_USER: expense_user
+      POSTGRES_PASSWORD: expense_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - expense_net
+
+  app:
+    container_name: go_expense
+    build:
+      context: .
+    environment:
+     # TODO: Move this into a .env file
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: expense_user
+      DB_PASSWORD: expense_pass
+      DB_NAME: expense_db
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - expense_net
+    volumes:
+      - .:/app
+    working_dir: /app
+
+volumes:
+  pgdata:
+
+networks:
+  expense_net:

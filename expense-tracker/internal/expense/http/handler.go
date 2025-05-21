@@ -2,6 +2,7 @@ package expense_http
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
@@ -24,6 +25,7 @@ func (u *ExpenseHandler) DeleteExpense(c *gin.Context) {
 
 	err := u.DeleteExpenseUC.Execute(id)
 	if err != nil {
+		log.Printf("Failed to delete expense: %v", err)
 		c.JSON(http.StatusNotFound, httpresponse.NewErrorResponse(err.Error()))
 		return
 	}
@@ -36,6 +38,7 @@ func (u *ExpenseHandler) DeleteExpense(c *gin.Context) {
 func (u *ExpenseHandler) GetAllExpenses(c *gin.Context) {
 	expenses, err := u.GetAllExpenseUC.Execute()
 	if err != nil {
+		log.Printf("Failed to get all expenses: %v", err)
 		c.JSON(http.StatusInternalServerError, httpresponse.NewErrorResponse(err.Error()))
 		return
 	}
@@ -47,6 +50,7 @@ func (u *ExpenseHandler) AddExpense(c *gin.Context) {
 	var request AddExpenseRequest
 
 	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Printf("Failed to bind request: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": "error",
 			"error": err.Error(),
@@ -55,6 +59,7 @@ func (u *ExpenseHandler) AddExpense(c *gin.Context) {
 	}
 
 	if err := u.AddExpenseUC.Execute(request.Title, request.Amount); err != nil {
+		log.Printf("Failed to add expense: %v", err)
 		c.JSON(http.StatusInternalServerError, httpresponse.NewErrorResponse(err.Error()))
 		return
 	}

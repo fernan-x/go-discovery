@@ -14,17 +14,18 @@ import (
 
 func connectDB() *pg.DB {
 	db := pg.Connect(&pg.Options{
-		Addr:     "localhost:5432",
-		User:     "youruser",
-		Password: "yourpass",
-		Database: "yourdb",
+		Addr:     os.Getenv("DB_HOST") + ":" + os.Getenv("DB_PORT"),
+		User:     os.Getenv("DB_USER"),
+		Password: os.Getenv("DB_PASSWORD"),
+		Database: os.Getenv("DB_NAME"),
 	})
 
 	// Ping to test
 	if _, err := db.Exec("SELECT 1"); err != nil {
 		log.Fatalf("Failed to connect to DB: %v", err)
-		os.Exit(1)
 	}
+
+	log.Println("Connected to DB")
 
 	return db
 }
