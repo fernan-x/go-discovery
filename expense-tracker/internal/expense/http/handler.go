@@ -12,6 +12,25 @@ import (
 type ExpenseHandler struct {
 	GetAllExpenseUC expense_usecase.GetAllExpenseUseCaseInterface
 	AddExpenseUC    expense_usecase.AddExpenseUseCaseInterface
+	DeleteExpenseUC expense_usecase.DeleteExpenseUseCaseInterface
+}
+
+func (u *ExpenseHandler) DeleteExpense(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, httpresponse.NewErrorResponse("Id parameter is required"))
+		return
+	}
+
+	err := u.DeleteExpenseUC.Execute(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, httpresponse.NewErrorResponse(err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, httpresponse.NewSuccessResponse(DeleteExpenseResponseData{
+		ID: id,
+	}))
 }
 
 func (u *ExpenseHandler) GetAllExpenses(c *gin.Context) {

@@ -8,3 +8,7 @@ type AddExpenseResponseData struct {
 }
 
 type GetAllExpenseResponseData = []expense_domain.Expense
+
+type DeleteExpenseResponseData struct {
+	ID string `json:"id"`
+}
