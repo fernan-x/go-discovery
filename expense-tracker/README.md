@@ -15,3 +15,7 @@ go test ./test/add_expense_test.go
 ```bash
 go run ./cmd/server/main.go
 ```
+
+## Dependencies
+
+- golang-migrate: Create and manage database migrations

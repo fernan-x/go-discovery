@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS expenses (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    amount NUMERIC NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);

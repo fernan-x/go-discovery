@@ -19,7 +19,7 @@ func NewPostgresExpenseRepository(db *pg.DB) *PostgresExpenseRepository {
 }
 
 func (r *PostgresExpenseRepository) Create(e expense_domain.Expense) error {
-	_, err := r.db.Model(expense_infra_postgres.ExpenseModel{}).Insert(expense_infra_postgres.FromDomain(e))
+	_, err := r.db.Model(&expense_infra_postgres.ExpenseModel{}).Insert(expense_infra_postgres.FromDomain(e))
 	return err
 }
 
@@ -32,13 +32,13 @@ func (r *PostgresExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
 
 	var res []expense_domain.Expense
 	for _, e := range expenses {
-		res = append(res, expense_infra_postgres.ToDomain(e))
+		res = append(res, *expense_infra_postgres.ToDomain(e))
 	}
 
 	return res, nil
 }
 
 func (r *PostgresExpenseRepository) Delete(id string) error {
-	_, err := r.db.Model(expense_infra_postgres.ExpenseModel{}).Where("id = ?", id).Delete()
+	_, err := r.db.Model(&expense_infra_postgres.ExpenseModel{}).Where("id = ?", id).Delete()
 	return err
 }

@@ -8,4 +8,4 @@ RUN go mod download
 
 COPY . ./
 
-CMD ["go", "run", "cmd/server/main.go"]
+CMD ["go", "run", "./cmd/server/"]
