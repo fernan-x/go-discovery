@@ -3,7 +3,7 @@ package expense_infra
 import (
 	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 	expense_infra_postgres "github.com/fernan-x/expense-tracker/internal/expense/infra/postgres"
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v10"
 )
 
 type PostgresExpenseRepository struct {

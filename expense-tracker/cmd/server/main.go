@@ -9,7 +9,7 @@ import (
 	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
 	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/gin-gonic/gin"
-	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/v10"
 )
 
 func connectDB() *pg.DB {
