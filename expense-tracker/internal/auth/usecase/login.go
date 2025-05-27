@@ -8,7 +8,7 @@ import (
 )
 
 type LoginUseCaseInterface interface {
-	Execute(email string, password string) (bool, error)
+	Execute(email string, password string) (string, error)
 }
 
 var _ LoginUseCaseInterface = &LoginUseCase{}
@@ -22,7 +22,13 @@ func NewLoginUseCase(userRepo user_domain.UserRepository, authService auth_domai
 	return &LoginUseCase{userRepo, authService}
 }
 
-func (u *LoginUseCase) Execute(email string, password string) (bool, error) {
-	// user, err := u.userRepo.getByEmail(email)
-	return false, errors.New("Not implemented")
+func (u *LoginUseCase) Execute(email string, password string) (string, error) {
+	_, err := u.userRepo.GetByEmail(email)
+	if err != nil {
+		return "", errors.New("Invalid credentials")
+	}
+
+	// err = u.authService.Verify(password, user.Password)
+
+	return "xxxx", nil
 }
