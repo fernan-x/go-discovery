@@ -19,6 +19,7 @@ services:
     container_name: go_expense
     build:
       context: .
+      dockerfile: Dockerfile.dev
     environment:
      # TODO: Move this into a .env file
       DB_HOST: db
