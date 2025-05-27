@@ -23,12 +23,17 @@ func NewLoginUseCase(userRepo user_domain.UserRepository, authService auth_domai
 }
 
 func (u *LoginUseCase) Execute(email string, password string) (string, error) {
-	_, err := u.userRepo.GetByEmail(email)
+	user, err := u.userRepo.GetByEmail(email)
 	if err != nil {
 		return "", errors.New("Invalid credentials")
 	}
 
-	// err = u.authService.Verify(password, user.Password)
+	err = u.authService.VerifyPassword(password, user.Password)
+	if err != nil {
+		return "", errors.New("Invalid credentials")
+	}
+
+	// TODO: Generate a token
 
 	return "xxxx", nil
 }
