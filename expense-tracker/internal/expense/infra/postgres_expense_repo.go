@@ -1,6 +1,8 @@
 package expense_infra
 
 import (
+	"fmt"
+
 	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 	expense_infra_postgres "github.com/fernan-x/expense-tracker/internal/expense/infra/postgres"
 	"github.com/go-pg/pg/v10"
@@ -30,7 +32,7 @@ func (r *PostgresExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
 		return nil, err
 	}
 
-	var res []expense_domain.Expense
+	var res []expense_domain.Expense = make([]expense_domain.Expense, 0)
 	for _, e := range expenses {
 		res = append(res, *expense_infra_postgres.ToDomain(e))
 	}
@@ -39,6 +41,9 @@ func (r *PostgresExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
 }
 
 func (r *PostgresExpenseRepository) Delete(id string) error {
-	_, err := r.db.Model(&expense_infra_postgres.ExpenseModel{}).Where("id = ?", id).Delete()
+	res, err := r.db.Model(&expense_infra_postgres.ExpenseModel{}).Where("id = ?", id).Delete()
+	if res.RowsAffected() == 0 {
+		return fmt.Errorf("No expense found with id %s", id)
+	}
 	return err
 }
