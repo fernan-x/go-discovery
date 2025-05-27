@@ -48,7 +48,7 @@ func TestUpdateExpense_Failure_AmountEqualZero(t *testing.T) {
 	assert.Equal(t, "Amount cannot be less than or equal to 0", err.Error())
 }
 
-func TestUpdateExpense_Success(t *testing.T) {
+func TestUpdateExpense_Success_TwoFields(t *testing.T) {
 	uc, repo := setupUC()
 
 	repo.Create(expense_domain.Expense{
@@ -71,4 +71,27 @@ func TestUpdateExpense_Success(t *testing.T) {
 	assert.Equal(t, 1, len(expenses))
 	assert.Equal(t, "Lunch edited", expenses[0].Title)
 	assert.Equal(t, 22.00, expenses[0].Amount)
+}
+
+func TestUpdateExpense_Success_OneField(t *testing.T) {
+	uc, repo := setupUC()
+
+	repo.Create(expense_domain.Expense{
+		ID: "1",
+		Title: "Lunch",
+		Amount: 12.90,
+		CreatedAt: time.Now(),
+	})
+
+	title := "Lunch edited"
+	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+		Title:   &title,
+	})
+	assert.NoError(t, err)
+
+	expenses, err := repo.GetAll()
+	assert.NoError(t, err)
+	assert.Equal(t, 1, len(expenses))
+	assert.Equal(t, "Lunch edited", expenses[0].Title)
+	assert.Equal(t, 12.90, expenses[0].Amount)
 }
