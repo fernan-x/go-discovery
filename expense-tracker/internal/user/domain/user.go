@@ -1,0 +1,13 @@
+package user_domain
+
+type User struct {
+	ID string
+	Email string
+	Password string
+	FirstName string
+	LastName string
+}
+
+type UserRepository interface {
+	Create(u *User) error
+}
