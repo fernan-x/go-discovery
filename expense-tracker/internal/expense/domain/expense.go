@@ -9,8 +9,14 @@ type Expense struct {
 	CreatedAt   time.Time
 }
 
+type ExpenseUpdateFields struct {
+	Title *string
+	Amount *float64
+}
+
 type ExpenseRepository interface {
 	Create(e Expense) error
 	GetAll() ([]Expense, error)
 	Delete(id string) error
+	Update(id string, fields ExpenseUpdateFields) error
 }

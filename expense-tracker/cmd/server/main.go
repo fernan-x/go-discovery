@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
 	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
 	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
@@ -30,11 +31,18 @@ func connectDB() *pg.DB {
 	return db
 }
 
-func main() {
-	db := connectDB()
-	router := gin.Default()
+func initRepositories(dummy bool) expense_domain.ExpenseRepository {
+	if dummy {
+		return expense_infra.NewInMemoryExpenseRepository()
+	}
 
+	db := connectDB()
 	InitMigrations()
+	return expense_infra.NewPostgresExpenseRepository(db)
+}
+
+func main() {
+	router := gin.Default()
 
 	router.GET("/status", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -42,8 +50,8 @@ func main() {
 		})
 	})
 
-	// expenseRepo := expense_infra.NewInMemoryExpenseRepository()
-	expenseRepo := expense_infra.NewPostgresExpenseRepository(db)
+	expenseRepo := initRepositories(true)
+
 	getAllExpenseUC := expense_usecase.NewGetAllExpenseUseCase(expenseRepo)
 	addExpenseUC := expense_usecase.NewAddExpenseUseCase(expenseRepo)
 	deleteExpenseUC := expense_usecase.NewDeleteExpenseUseCase(expenseRepo)

@@ -25,3 +25,7 @@ func (r *FailingExpenseRepositoryTest) GetAll() ([]expense_domain.Expense, error
 func (r *FailingExpenseRepositoryTest) Delete(id string) error {
 	return errors.New("Error deleting expense")
 }
+
+func (r *FailingExpenseRepositoryTest) Update(id string, fields expense_domain.ExpenseUpdateFields) error {
+	return errors.New("Error updating expense")
+}

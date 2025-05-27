@@ -1,6 +1,7 @@
 package expense_infra
 
 import (
+	"errors"
 	"fmt"
 
 	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
@@ -47,4 +48,8 @@ func (r *PostgresExpenseRepository) Delete(id string) error {
 		return fmt.Errorf("No expense found with id %s", id)
 	}
 	return err
+}
+
+func (r *PostgresExpenseRepository) Update(id string, fields expense_domain.ExpenseUpdateFields) error {
+	return errors.New("Not implemented")
 }

@@ -1,7 +1,6 @@
 package expense_http
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -42,7 +41,7 @@ func (u *ExpenseHandler) GetAllExpenses(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, httpresponse.NewErrorResponse(err.Error()))
 		return
 	}
-	fmt.Printf("Expenses: %v\n", expenses)
+
 	c.JSON(http.StatusOK, httpresponse.NewSuccessResponse(expenses))
 }
 
