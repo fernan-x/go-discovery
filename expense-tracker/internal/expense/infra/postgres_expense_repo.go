@@ -53,3 +53,7 @@ func (r *PostgresExpenseRepository) Delete(id string) error {
 func (r *PostgresExpenseRepository) Update(id string, fields expense_domain.ExpenseUpdateFields) error {
 	return errors.New("Not implemented")
 }
+
+func (r *PostgresExpenseRepository) GetByID(id string) (*expense_domain.Expense, error) {
+	return nil, errors.New("Not implemented")
+}

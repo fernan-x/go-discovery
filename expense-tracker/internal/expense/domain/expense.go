@@ -19,4 +19,5 @@ type ExpenseRepository interface {
 	GetAll() ([]Expense, error)
 	Delete(id string) error
 	Update(id string, fields ExpenseUpdateFields) error
+	GetByID(id string) (*Expense, error)
 }

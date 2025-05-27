@@ -29,3 +29,7 @@ func (r *FailingExpenseRepositoryTest) Delete(id string) error {
 func (r *FailingExpenseRepositoryTest) Update(id string, fields expense_domain.ExpenseUpdateFields) error {
 	return errors.New("Error updating expense")
 }
+
+func (r *FailingExpenseRepositoryTest) GetByID(id string) (*expense_domain.Expense, error) {
+	return nil, errors.New("Error getting expense by id")
+}

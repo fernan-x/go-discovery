@@ -59,3 +59,13 @@ func (r *InMemoryExpenseRepository) Update(id string, fields expense_domain.Expe
 
 	return errors.New("Element with id " + id + " not found")
 }
+
+func (r *InMemoryExpenseRepository) GetByID(id string) (*expense_domain.Expense, error) {
+	for _, e := range r.expenses {
+		if e.ID == id {
+			return &e, nil
+		}
+	}
+
+	return nil, errors.New("Element with id " + id + " not found")
+}
