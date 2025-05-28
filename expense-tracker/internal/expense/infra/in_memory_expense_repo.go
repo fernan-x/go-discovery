@@ -1,29 +1,29 @@
-package expense_infra
+package expenseinfra
 
 import (
 	"errors"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 )
 
 type InMemoryExpenseRepository struct {
-	expenses []expense_domain.Expense
+	expenses []expensedomain.Expense
 }
 
-var _ expense_domain.ExpenseRepository = (*InMemoryExpenseRepository)(nil)
+var _ expensedomain.ExpenseRepository = (*InMemoryExpenseRepository)(nil)
 
 func NewInMemoryExpenseRepository() *InMemoryExpenseRepository {
 	return &InMemoryExpenseRepository{
-		expenses: []expense_domain.Expense{},
+		expenses: []expensedomain.Expense{},
 	}
 }
 
-func (r *InMemoryExpenseRepository) Create(e expense_domain.Expense) error {
+func (r *InMemoryExpenseRepository) Create(e expensedomain.Expense) error {
 	r.expenses = append(r.expenses, e)
 	return nil
 }
 
-func (r *InMemoryExpenseRepository) GetAll() ([]expense_domain.Expense, error) {
+func (r *InMemoryExpenseRepository) GetAll() ([]expensedomain.Expense, error) {
 	return r.expenses, nil
 }
 
@@ -39,7 +39,7 @@ func (r *InMemoryExpenseRepository) Delete(id string) error {
 	return errors.New("Element with id " + id + " not found")
 }
 
-func applyUpdate(e *expense_domain.Expense, fields expense_domain.ExpenseUpdateFields) {
+func applyUpdate(e *expensedomain.Expense, fields expensedomain.ExpenseUpdateFields) {
 	if fields.Title != nil {
 		e.Title = *fields.Title
 	}
@@ -48,7 +48,7 @@ func applyUpdate(e *expense_domain.Expense, fields expense_domain.ExpenseUpdateF
 	}
 }
 
-func (r *InMemoryExpenseRepository) Update(id string, fields expense_domain.ExpenseUpdateFields) error {
+func (r *InMemoryExpenseRepository) Update(id string, fields expensedomain.ExpenseUpdateFields) error {
 	for i, e := range r.expenses {
 		if e.ID == id {
 			applyUpdate(&e, fields)
@@ -60,7 +60,7 @@ func (r *InMemoryExpenseRepository) Update(id string, fields expense_domain.Expe
 	return errors.New("Element with id " + id + " not found")
 }
 
-func (r *InMemoryExpenseRepository) GetByID(id string) (*expense_domain.Expense, error) {
+func (r *InMemoryExpenseRepository) GetByID(id string) (*expensedomain.Expense, error) {
 	for _, e := range r.expenses {
 		if e.ID == id {
 			return &e, nil

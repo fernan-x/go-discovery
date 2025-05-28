@@ -1,21 +1,21 @@
-package user_usecase
+package userusecase
 
-import user_domain "github.com/fernan-x/expense-tracker/internal/user/domain"
+import userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 
 type GetUserByEmailUseCaseInterface interface {
-	Execute(email string) (*user_domain.User, error)
+	Execute(email string) (*userdomain.User, error)
 }
 
 var _ GetUserByEmailUseCaseInterface = &GetUserByEmail{}
 
 type GetUserByEmail struct {
-	repo user_domain.UserRepository
+	repo userdomain.UserRepository
 }
 
-func NewGetUserByEmailUseCase(repo user_domain.UserRepository) *GetUserByEmail {
+func NewGetUserByEmailUseCase(repo userdomain.UserRepository) *GetUserByEmail {
 	return &GetUserByEmail{repo}
 }
 
-func (u *GetUserByEmail) Execute(email string) (*user_domain.User, error) {
+func (u *GetUserByEmail) Execute(email string) (*userdomain.User, error) {
 	return u.repo.GetByEmail(email)
 }

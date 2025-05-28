@@ -1,15 +1,15 @@
-package token_issuer_test
+package tokenissuer_test
 
 import (
 	"testing"
 
-	token_issuer "github.com/fernan-x/expense-tracker/internal/shared/token-issuer"
+	tokenissuer "github.com/fernan-x/expense-tracker/internal/shared/tokenissuer"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"
 )
 
 var secret = []byte("secret")
-var jti = token_issuer.NewJwtTokenIssuer(secret)
+var jti = tokenissuer.NewJwtTokenIssuer(secret)
 
 func TestJwtTokenIssuer_GenerateAccessToken_Success(t *testing.T) {
 	token, err := jti.GenerateAccessToken("12345")
@@ -71,7 +71,7 @@ func TestJwtTokenIssuer_Parse_Success(t *testing.T) {
 
 func TestJwtTokenIssuer_Parse_Failure_Signature(t *testing.T) {
 	token := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDg1MzE0MzEsImlhdCI6MTc0ODQ0NTAzMSwiaXNzIjoiRXhwZW5zZSBUcmFja2VyIiwic3ViIjoiMTIzNDUifQ.lqRuN8G2PQKiGhEdQOXd92EN0imzrdmDrncfF8CDxvE"
-	jti := token_issuer.NewJwtTokenIssuer([]byte("wrong-secret"))
+	jti := tokenissuer.NewJwtTokenIssuer([]byte("wrong-secret"))
 	_, err := jti.Parse(token)
 	assert.Error(t, err)
 }

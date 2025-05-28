@@ -1,4 +1,4 @@
-package token_issuer
+package tokenissuer
 
 type TokenIssuer interface {
 	GenerateAccessToken(userId string) (string, error)

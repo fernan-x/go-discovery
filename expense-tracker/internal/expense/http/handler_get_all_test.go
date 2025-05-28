@@ -1,4 +1,4 @@
-package expense_http_test
+package expensehttp_test
 
 import (
 	"encoding/json"
@@ -8,17 +8,17 @@ import (
 	"testing"
 	"time"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
-	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expensehttp "github.com/fernan-x/expense-tracker/internal/expense/http"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/fernan-x/expense-tracker/internal/shared/httpresponse"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
 type mockGetAllExpenseSuccessUseCase struct {}
-func (u *mockGetAllExpenseSuccessUseCase) Execute() ([]expense_domain.Expense, error) {
-	return []expense_domain.Expense{
+func (u *mockGetAllExpenseSuccessUseCase) Execute() ([]expensedomain.Expense, error) {
+	return []expensedomain.Expense{
 		{
 			ID: "1",
 			Title: "Lunch",
@@ -34,15 +34,15 @@ func (u *mockGetAllExpenseSuccessUseCase) Execute() ([]expense_domain.Expense, e
 	}, nil
 }
 type mockGetAllExpenseFailureUseCase struct {}
-func (u *mockGetAllExpenseFailureUseCase) Execute() ([]expense_domain.Expense, error) {
+func (u *mockGetAllExpenseFailureUseCase) Execute() ([]expensedomain.Expense, error) {
 	return nil, errors.New("something went wrong")
 }
 
-func setupGetAllExpenseHandler(uc expense_usecase.GetAllExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
+func setupGetAllExpenseHandler(uc expenseusecase.GetAllExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
-	handler := &expense_http.ExpenseHandler{
+	handler := &expensehttp.ExpenseHandler{
 		GetAllExpenseUC: uc,
 	}
 	router.GET("/expenses", handler.GetAllExpenses)
@@ -60,7 +60,7 @@ func TestGetAllExpenses_Success(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	// Parse response
-	var res httpresponse.BaseResponse[expense_http.GetAllExpenseResponseData]
+	var res httpresponse.BaseResponse[expensehttp.GetAllExpenseResponseData]
 	err := json.Unmarshal(w.Body.Bytes(), &res)
 	assert.NoError(t, err)
 

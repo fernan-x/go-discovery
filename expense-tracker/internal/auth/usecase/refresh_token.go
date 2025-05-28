@@ -1,9 +1,9 @@
-package auth_usecase
+package authusecase
 
 import (
 	"errors"
 
-	auth_domain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
 )
 
 type RefreshTokenResponse struct {
@@ -18,10 +18,10 @@ type RefreshTokenUseCaseInterface interface {
 var _ RefreshTokenUseCaseInterface = &RefreshTokenUseCase{}
 
 type RefreshTokenUseCase struct {
-	authService auth_domain.AuthService
+	authService authdomain.AuthService
 }
 
-func NewRefreshTokenUseCase(authService auth_domain.AuthService) *RefreshTokenUseCase {
+func NewRefreshTokenUseCase(authService authdomain.AuthService) *RefreshTokenUseCase {
 	return &RefreshTokenUseCase{authService}
 }
 

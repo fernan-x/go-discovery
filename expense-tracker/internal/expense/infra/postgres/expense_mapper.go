@@ -1,8 +1,8 @@
-package expense_infra_postgres
+package expenseinfra_postgres
 
-import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+import expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 
-func FromDomain(e expense_domain.Expense) ExpenseModel {
+func FromDomain(e expensedomain.Expense) ExpenseModel {
 	return ExpenseModel{
 		ID:        e.ID,
 		Title:     e.Title,
@@ -11,8 +11,8 @@ func FromDomain(e expense_domain.Expense) ExpenseModel {
 	}
 }
 
-func ToDomain(e ExpenseModel) expense_domain.Expense {
-	return expense_domain.Expense{
+func ToDomain(e ExpenseModel) expensedomain.Expense {
+	return expensedomain.Expense{
 		ID:        e.ID,
 		Title:     e.Title,
 		Amount:    e.Amount,

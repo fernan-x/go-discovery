@@ -1,6 +1,6 @@
-package expense_usecase
+package expenseusecase
 
-import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+import expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 
 type DeleteExpenseUseCaseInterface interface {
 	Execute(id string) error
@@ -9,10 +9,10 @@ type DeleteExpenseUseCaseInterface interface {
 var _ DeleteExpenseUseCaseInterface = &DeleteExpenseUseCase{}
 
 type DeleteExpenseUseCase struct {
-	repo expense_domain.ExpenseRepository
+	repo expensedomain.ExpenseRepository
 }
 
-func NewDeleteExpenseUseCase(repo expense_domain.ExpenseRepository) *DeleteExpenseUseCase {
+func NewDeleteExpenseUseCase(repo expensedomain.ExpenseRepository) *DeleteExpenseUseCase {
 	return &DeleteExpenseUseCase{repo}
 }
 

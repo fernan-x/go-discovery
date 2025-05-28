@@ -1,11 +1,11 @@
-package auth_usecase
+package authusecase
 
 import (
 	"time"
 
-	auth_domain "github.com/fernan-x/expense-tracker/internal/auth/domain"
-	token_issuer "github.com/fernan-x/expense-tracker/internal/shared/token-issuer"
-	user_domain "github.com/fernan-x/expense-tracker/internal/user/domain"
+	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	tokenissuer "github.com/fernan-x/expense-tracker/internal/shared/tokenissuer"
+	userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
 
 type RequestPasswordResetUseCaseInterface interface {
@@ -15,15 +15,15 @@ type RequestPasswordResetUseCaseInterface interface {
 var _ RequestPasswordResetUseCaseInterface = (*RequestPasswordResetUseCase)(nil)
 
 type RequestPasswordResetUseCase struct {
-	tokenRepo auth_domain.PasswordResetTokenRepository
-	userRepo user_domain.UserRepository
-	tokenIssuer token_issuer.TokenIssuer
+	tokenRepo authdomain.PasswordResetTokenRepository
+	userRepo userdomain.UserRepository
+	tokenIssuer tokenissuer.TokenIssuer
 }
 
 func NewRequestPasswordResetUseCase(
-	tokenRepo auth_domain.PasswordResetTokenRepository,
-	userRepo user_domain.UserRepository,
-	tokenIssuer token_issuer.TokenIssuer,
+	tokenRepo authdomain.PasswordResetTokenRepository,
+	userRepo userdomain.UserRepository,
+	tokenIssuer tokenissuer.TokenIssuer,
 ) *RequestPasswordResetUseCase {
 	return &RequestPasswordResetUseCase{tokenRepo, userRepo, tokenIssuer}
 }
@@ -39,7 +39,7 @@ func (u *RequestPasswordResetUseCase) Execute(email string) (string, error) {
 		return "", err
 	}
 
-	model := auth_domain.PasswordResetToken{
+	model := authdomain.PasswordResetToken{
 		Token: token,
 		UserId: user.ID,
 		ExpiresAt: time.Now().Add(time.Minute * 15), // 15 minutes

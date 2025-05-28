@@ -1,19 +1,19 @@
-package auth_infra
+package authinfra
 
 import (
-	auth_domain "github.com/fernan-x/expense-tracker/internal/auth/domain"
-	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
-	token_issuer "github.com/fernan-x/expense-tracker/internal/shared/token-issuer"
+	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	passwordhasher "github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
+	tokenissuer "github.com/fernan-x/expense-tracker/internal/shared/tokenissuer"
 )
 
 type AuthServiceImpl struct {
-	passwordHasher password_hasher.PasswordHasher
-	tokenIssuer token_issuer.TokenIssuer
+	passwordHasher passwordhasher.PasswordHasher
+	tokenIssuer tokenissuer.TokenIssuer
 }
 
-var _ auth_domain.AuthService = (*AuthServiceImpl)(nil)
+var _ authdomain.AuthService = (*AuthServiceImpl)(nil)
 
-func NewAuthService(passwordHasher password_hasher.PasswordHasher, tokenIssuer token_issuer.TokenIssuer) *AuthServiceImpl {
+func NewAuthService(passwordHasher passwordhasher.PasswordHasher, tokenIssuer tokenissuer.TokenIssuer) *AuthServiceImpl {
 	return &AuthServiceImpl{passwordHasher, tokenIssuer}
 }
 

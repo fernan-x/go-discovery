@@ -1,4 +1,4 @@
-package expense_http
+package expensehttp
 
 type AddExpenseRequest struct {
 	Title string `json:"title" binding:"required"`

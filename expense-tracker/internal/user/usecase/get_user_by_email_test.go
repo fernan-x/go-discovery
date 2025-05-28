@@ -1,18 +1,18 @@
-package user_usecase_test
+package userusecase_test
 
 import (
 	"testing"
 
-	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
-	user_infra "github.com/fernan-x/expense-tracker/internal/user/infra"
-	user_usecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
+	passwordhasher "github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
+	userinfra "github.com/fernan-x/expense-tracker/internal/user/infra"
+	userusecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
-var repo = user_infra.NewInMemoryUserRepository()
+var repo = userinfra.NewInMemoryUserRepository()
 
 func TestGetUserByEmailUsecase_Failing(t *testing.T) {
-	uc := user_usecase.NewGetUserByEmailUseCase(repo)
+	uc := userusecase.NewGetUserByEmailUseCase(repo)
 
 	_, err := uc.Execute("jean.dupont@test.com")
 	assert.Error(t, err)
@@ -20,11 +20,11 @@ func TestGetUserByEmailUsecase_Failing(t *testing.T) {
 }
 
 func TestGetUserByEmailUsecase_Success(t *testing.T) {
-	ucCreate := user_usecase.NewCreateUserUseCase(repo, &password_hasher.BcryptPasswordHasher{})
+	ucCreate := userusecase.NewCreateUserUseCase(repo, &passwordhasher.BcryptPasswordHasher{})
 	err := ucCreate.Execute("jean.dupont@test.com", "123456", "Jean", "Dupont")
 	assert.NoError(t, err)
 
-	uc := user_usecase.NewGetUserByEmailUseCase(repo)
+	uc := userusecase.NewGetUserByEmailUseCase(repo)
 
 	user, err := uc.Execute("jean.dupont@test.com")
 	assert.NoError(t, err)
@@ -34,11 +34,11 @@ func TestGetUserByEmailUsecase_Success(t *testing.T) {
 }
 
 func TestGetUserByEmailUsecase_Failure_UserNotFound(t *testing.T) {
-	ucCreate := user_usecase.NewCreateUserUseCase(repo, &password_hasher.BcryptPasswordHasher{})
+	ucCreate := userusecase.NewCreateUserUseCase(repo, &passwordhasher.BcryptPasswordHasher{})
 	err := ucCreate.Execute("jean.dupont@test.com", "123456", "Jean", "Dupont")
 	assert.NoError(t, err)
 
-	uc := user_usecase.NewGetUserByEmailUseCase(repo)
+	uc := userusecase.NewGetUserByEmailUseCase(repo)
 
 	_, err = uc.Execute("jean.dupont2@test.com")
 	assert.Error(t, err)

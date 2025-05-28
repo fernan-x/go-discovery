@@ -1,4 +1,4 @@
-package expense_infra_postgres
+package expenseinfra_postgres
 
 import "time"
 

@@ -1,4 +1,4 @@
-package auth_domain
+package authdomain
 
 type AuthService interface {
 	VerifyPassword(password string, hash string) error

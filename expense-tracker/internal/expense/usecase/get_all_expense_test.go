@@ -1,24 +1,24 @@
-package expense_usecase_test
+package expenseusecase_test
 
 import (
 	"testing"
 	"time"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expenseinfra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetAllExpense(t *testing.T) {
-	repo := expense_infra.NewInMemoryExpenseRepository()
-	uc := expense_usecase.NewGetAllExpenseUseCase(repo)
+	repo := expenseinfra.NewInMemoryExpenseRepository()
+	uc := expenseusecase.NewGetAllExpenseUseCase(repo)
 
 	expenses, err := uc.Execute()
 	assert.NoError(t, err)
 	assert.Equal(t, 0, len(expenses))
 
-	err = repo.Create(expense_domain.Expense{
+	err = repo.Create(expensedomain.Expense{
 		ID: "1",
 		Title: "Lunch",
 		Amount: 12.90,
@@ -26,7 +26,7 @@ func TestGetAllExpense(t *testing.T) {
 	});
 	assert.NoError(t, err)
 
-	err = repo.Create(expense_domain.Expense{
+	err = repo.Create(expensedomain.Expense{
 		ID: "2",
 		Title: "Dinner",
 		Amount: 20.00,

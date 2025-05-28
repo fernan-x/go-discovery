@@ -1,4 +1,4 @@
-package expense_domain
+package expensedomain
 
 import "time"
 

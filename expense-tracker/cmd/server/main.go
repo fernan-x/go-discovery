@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"os"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
-	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expensehttp "github.com/fernan-x/expense-tracker/internal/expense/http"
+	expenseinfra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/go-pg/pg/v10"
 )
@@ -31,14 +31,14 @@ func connectDB() *pg.DB {
 	return db
 }
 
-func initRepositories(dummy bool) expense_domain.ExpenseRepository {
+func initRepositories(dummy bool) expensedomain.ExpenseRepository {
 	if dummy {
-		return expense_infra.NewInMemoryExpenseRepository()
+		return expenseinfra.NewInMemoryExpenseRepository()
 	}
 
 	db := connectDB()
 	InitMigrations()
-	return expense_infra.NewPostgresExpenseRepository(db)
+	return expenseinfra.NewPostgresExpenseRepository(db)
 }
 
 func main() {
@@ -52,10 +52,10 @@ func main() {
 
 	expenseRepo := initRepositories(true)
 
-	getAllExpenseUC := expense_usecase.NewGetAllExpenseUseCase(expenseRepo)
-	addExpenseUC := expense_usecase.NewAddExpenseUseCase(expenseRepo)
-	deleteExpenseUC := expense_usecase.NewDeleteExpenseUseCase(expenseRepo)
-	handler := expense_http.ExpenseHandler{
+	getAllExpenseUC := expenseusecase.NewGetAllExpenseUseCase(expenseRepo)
+	addExpenseUC := expenseusecase.NewAddExpenseUseCase(expenseRepo)
+	deleteExpenseUC := expenseusecase.NewDeleteExpenseUseCase(expenseRepo)
+	handler := expensehttp.ExpenseHandler{
 		GetAllExpenseUC: getAllExpenseUC,
 		AddExpenseUC: addExpenseUC,
 		DeleteExpenseUC: deleteExpenseUC,

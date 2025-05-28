@@ -1,18 +1,18 @@
-package user_usecase_test
+package userusecase_test
 
 import (
 	"testing"
 
-	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
-	user_infra "github.com/fernan-x/expense-tracker/internal/user/infra"
-	user_usecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
+	passwordhasher "github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
+	userinfra "github.com/fernan-x/expense-tracker/internal/user/infra"
+	userusecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateUser(t *testing.T) {
-	repo := user_infra.NewInMemoryUserRepository()
-	passwordHasher := &password_hasher.BcryptPasswordHasher{}
-	uc := user_usecase.NewCreateUserUseCase(repo, passwordHasher)
+	repo := userinfra.NewInMemoryUserRepository()
+	passwordHasher := &passwordhasher.BcryptPasswordHasher{}
+	uc := userusecase.NewCreateUserUseCase(repo, passwordHasher)
 
 	err := uc.Execute("jean.dupont@test.com", "123456", "Jean", "Dupont")
 	assert.NoError(t, err)

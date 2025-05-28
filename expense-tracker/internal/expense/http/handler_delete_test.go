@@ -1,4 +1,4 @@
-package expense_http_test
+package expensehttp_test
 
 import (
 	"encoding/json"
@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensehttp "github.com/fernan-x/expense-tracker/internal/expense/http"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/fernan-x/expense-tracker/internal/shared/httpresponse"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -23,11 +23,11 @@ func (u *mockDeleteExpenseFailureUseCase) Execute(id string) error {
 	return errors.New("Not found")
 }
 
-func setupDeleteExpenseHandler(uc expense_usecase.DeleteExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
+func setupDeleteExpenseHandler(uc expenseusecase.DeleteExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
-	handler := &expense_http.ExpenseHandler{
+	handler := &expensehttp.ExpenseHandler{
 		DeleteExpenseUC: uc,
 	}
 	router.DELETE("/expenses/:id", handler.DeleteExpense)
@@ -43,7 +43,7 @@ func TestDeleteExpenseHandler_Success(t *testing.T) {
 	router, w := setupDeleteExpenseHandler(&mockDeleteExpenseSuccessUseCase{})
 	router.ServeHTTP(w, req)
 
-	var res httpresponse.BaseResponse[expense_http.DeleteExpenseResponseData]
+	var res httpresponse.BaseResponse[expensehttp.DeleteExpenseResponseData]
 	err := json.Unmarshal(w.Body.Bytes(), &res)
 	assert.NoError(t, err)
 

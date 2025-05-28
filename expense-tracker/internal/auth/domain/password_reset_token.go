@@ -1,4 +1,4 @@
-package auth_domain
+package authdomain
 
 import "time"
 

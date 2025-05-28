@@ -1,18 +1,18 @@
-package expense_usecase_test
+package expenseusecase_test
 
 import (
 	"testing"
 	"time"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expenseinfra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetExpenseById_Failure(t *testing.T) {
-	repo := expense_infra.NewInMemoryExpenseRepository()
-	uc := expense_usecase.NewGetExpenseByIdUseCase(repo)
+	repo := expenseinfra.NewInMemoryExpenseRepository()
+	uc := expenseusecase.NewGetExpenseByIdUseCase(repo)
 
 	e, err := uc.Execute("1")
 	assert.Equal(t, "Element with id 1 not found", err.Error())
@@ -21,10 +21,10 @@ func TestGetExpenseById_Failure(t *testing.T) {
 }
 
 func TestGetExpenseById_Success(t *testing.T) {
-	repo := expense_infra.NewInMemoryExpenseRepository()
-	uc := expense_usecase.NewGetExpenseByIdUseCase(repo)
+	repo := expenseinfra.NewInMemoryExpenseRepository()
+	uc := expenseusecase.NewGetExpenseByIdUseCase(repo)
 
-	repo.Create(expense_domain.Expense{
+	repo.Create(expensedomain.Expense{
 		ID: "1",
 		Title: "Lunch",
 		Amount: 12.90,

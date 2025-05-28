@@ -1,9 +1,9 @@
-package expense_usecase
+package expenseusecase
 
 import (
 	"time"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 	"github.com/google/uuid"
 )
 
@@ -13,17 +13,17 @@ type AddExpenseUseCaseInterface interface {
 var _ AddExpenseUseCaseInterface = &AddExpenseUseCase{}
 
 type AddExpenseUseCase struct {
-	repo expense_domain.ExpenseRepository
+	repo expensedomain.ExpenseRepository
 }
 
-func NewAddExpenseUseCase(repo expense_domain.ExpenseRepository) *AddExpenseUseCase {
+func NewAddExpenseUseCase(repo expensedomain.ExpenseRepository) *AddExpenseUseCase {
 	return &AddExpenseUseCase{repo}
 }
 
 
 // Method with pointer receiver (like method in OOP)
 func (u *AddExpenseUseCase) Execute(title string, amount float64) error {
-	e := expense_domain.Expense{
+	e := expensedomain.Expense{
 		ID: uuid.New().String(),
 		Title: title,
 		Amount: amount,

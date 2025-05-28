@@ -1,10 +1,10 @@
-package auth_usecase
+package authusecase
 
 import (
 	"errors"
 
-	auth_domain "github.com/fernan-x/expense-tracker/internal/auth/domain"
-	user_domain "github.com/fernan-x/expense-tracker/internal/user/domain"
+	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
 
 type LoginUseCaseInterface interface {
@@ -14,8 +14,8 @@ type LoginUseCaseInterface interface {
 var _ LoginUseCaseInterface = &LoginUseCase{}
 
 type LoginUseCase struct {
-	userRepo user_domain.UserRepository
-	authService auth_domain.AuthService
+	userRepo userdomain.UserRepository
+	authService authdomain.AuthService
 }
 
 type LoginResponse struct {
@@ -23,7 +23,7 @@ type LoginResponse struct {
 	RefreshToken string
 }
 
-func NewLoginUseCase(userRepo user_domain.UserRepository, authService auth_domain.AuthService) *LoginUseCase {
+func NewLoginUseCase(userRepo userdomain.UserRepository, authService authdomain.AuthService) *LoginUseCase {
 	return &LoginUseCase{userRepo, authService}
 }
 

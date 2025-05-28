@@ -1,4 +1,4 @@
-package password_hasher
+package passwordhasher
 
 type PasswordHasher interface {
 	Hash(password string) (string, error)

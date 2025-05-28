@@ -1,21 +1,21 @@
-package expense_usecase
+package expenseusecase
 
-import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+import expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 
 type GetAllExpenseUseCaseInterface interface {
-	Execute() ([]expense_domain.Expense, error)
+	Execute() ([]expensedomain.Expense, error)
 }
 
 var _ GetAllExpenseUseCaseInterface = &GetAllExpenseUseCase{}
 
 type GetAllExpenseUseCase struct {
-	repo expense_domain.ExpenseRepository
+	repo expensedomain.ExpenseRepository
 }
 
-func NewGetAllExpenseUseCase(repo expense_domain.ExpenseRepository) *GetAllExpenseUseCase {
+func NewGetAllExpenseUseCase(repo expensedomain.ExpenseRepository) *GetAllExpenseUseCase {
 	return &GetAllExpenseUseCase{repo}
 }
 
-func (u *GetAllExpenseUseCase) Execute() ([]expense_domain.Expense, error) {
+func (u *GetAllExpenseUseCase) Execute() ([]expensedomain.Expense, error) {
 	return u.repo.GetAll()
 }

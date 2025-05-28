@@ -1,25 +1,25 @@
-package expense_usecase_test
+package expenseusecase_test
 
 import (
 	"testing"
 	"time"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expenseinfra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
-func setupUC() (expense_usecase.UpdateExpenseUseCaseInterface, *expense_infra.InMemoryExpenseRepository) {
-	repo := expense_infra.NewInMemoryExpenseRepository()
-	return expense_usecase.NewUpdateExpenseUseCase(repo), repo
+func setupUC() (expenseusecase.UpdateExpenseUseCaseInterface, *expenseinfra.InMemoryExpenseRepository) {
+	repo := expenseinfra.NewInMemoryExpenseRepository()
+	return expenseusecase.NewUpdateExpenseUseCase(repo), repo
 }
 
 func TestUpdateExpense_Failure_TitleRequired(t *testing.T) {
 	uc, _ := setupUC()
 
 	emptyTitle := ""
-	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+	err := uc.Execute("1", expensedomain.ExpenseUpdateFields{
 		Title: &emptyTitle,
 	})
 	assert.Error(t, err)
@@ -30,7 +30,7 @@ func TestUpdateExpense_Failure_AmountLessThanZero(t *testing.T) {
 	uc, _ := setupUC()
 
 	negativeAmount := -10.00
-	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+	err := uc.Execute("1", expensedomain.ExpenseUpdateFields{
 		Amount: &negativeAmount,
 	})
 	assert.Error(t, err)
@@ -41,7 +41,7 @@ func TestUpdateExpense_Failure_AmountEqualZero(t *testing.T) {
 	uc, _ := setupUC()
 
 	negativeAmount := 0.00
-	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+	err := uc.Execute("1", expensedomain.ExpenseUpdateFields{
 		Amount: &negativeAmount,
 	})
 	assert.Error(t, err)
@@ -51,7 +51,7 @@ func TestUpdateExpense_Failure_AmountEqualZero(t *testing.T) {
 func TestUpdateExpense_Success_TwoFields(t *testing.T) {
 	uc, repo := setupUC()
 
-	repo.Create(expense_domain.Expense{
+	repo.Create(expensedomain.Expense{
 		ID: "1",
 		Title: "Lunch",
 		Amount: 12.90,
@@ -60,7 +60,7 @@ func TestUpdateExpense_Success_TwoFields(t *testing.T) {
 
 	title := "Lunch edited"
 	amount := 22.00
-	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+	err := uc.Execute("1", expensedomain.ExpenseUpdateFields{
 		Title:   &title,
 		Amount:  &amount,
 	})
@@ -76,7 +76,7 @@ func TestUpdateExpense_Success_TwoFields(t *testing.T) {
 func TestUpdateExpense_Success_OneField(t *testing.T) {
 	uc, repo := setupUC()
 
-	repo.Create(expense_domain.Expense{
+	repo.Create(expensedomain.Expense{
 		ID: "1",
 		Title: "Lunch",
 		Amount: 12.90,
@@ -84,7 +84,7 @@ func TestUpdateExpense_Success_OneField(t *testing.T) {
 	})
 
 	title := "Lunch edited"
-	err := uc.Execute("1", expense_domain.ExpenseUpdateFields{
+	err := uc.Execute("1", expensedomain.ExpenseUpdateFields{
 		Title:   &title,
 	})
 	assert.NoError(t, err)

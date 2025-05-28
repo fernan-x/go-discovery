@@ -1,18 +1,18 @@
-package expense_http
+package expensehttp
 
 import (
 	"log"
 	"net/http"
 
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/fernan-x/expense-tracker/internal/shared/httpresponse"
 	"github.com/gin-gonic/gin"
 )
 
 type ExpenseHandler struct {
-	GetAllExpenseUC expense_usecase.GetAllExpenseUseCaseInterface
-	AddExpenseUC    expense_usecase.AddExpenseUseCaseInterface
-	DeleteExpenseUC expense_usecase.DeleteExpenseUseCaseInterface
+	GetAllExpenseUC expenseusecase.GetAllExpenseUseCaseInterface
+	AddExpenseUC    expenseusecase.AddExpenseUseCaseInterface
+	DeleteExpenseUC expenseusecase.DeleteExpenseUseCaseInterface
 }
 
 func (u *ExpenseHandler) DeleteExpense(c *gin.Context) {

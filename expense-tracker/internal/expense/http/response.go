@@ -1,13 +1,13 @@
-package expense_http
+package expensehttp
 
-import expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+import expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 
 type AddExpenseResponseData struct {
 	Title  string  `json:"title"`
 	Amount float64 `json:"amount"`
 }
 
-type GetAllExpenseResponseData = []expense_domain.Expense
+type GetAllExpenseResponseData = []expensedomain.Expense
 
 type DeleteExpenseResponseData struct {
 	ID string `json:"id"`

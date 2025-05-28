@@ -1,4 +1,4 @@
-package token_issuer
+package tokenissuer
 
 type DummyTokenIssuer struct {}
 

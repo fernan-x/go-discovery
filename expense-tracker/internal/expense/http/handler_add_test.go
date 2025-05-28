@@ -1,4 +1,4 @@
-package expense_http_test
+package expensehttp_test
 
 import (
 	"bytes"
@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	expense_http "github.com/fernan-x/expense-tracker/internal/expense/http"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expensehttp "github.com/fernan-x/expense-tracker/internal/expense/http"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/fernan-x/expense-tracker/internal/shared/httpresponse"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -24,11 +24,11 @@ func (u *mockAddExpenseFailureUseCase) Execute(title string, amount float64) err
 	return errors.New("something went wrong")
 }
 
-func setupAddExpenseHandler(uc expense_usecase.AddExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
+func setupAddExpenseHandler(uc expenseusecase.AddExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.Default()
-	handler := &expense_http.ExpenseHandler{
+	handler := &expensehttp.ExpenseHandler{
 		AddExpenseUC: uc,
 	}
 	router.POST("/expenses", handler.AddExpense)
@@ -47,7 +47,7 @@ func TestAddExpenseHandler_Success(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	// Parse response
-	var res httpresponse.BaseResponse[expense_http.AddExpenseResponseData]
+	var res httpresponse.BaseResponse[expensehttp.AddExpenseResponseData]
 	err := json.Unmarshal(w.Body.Bytes(), &res)
 	assert.NoError(t, err)
 

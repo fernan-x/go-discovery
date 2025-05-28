@@ -1,8 +1,8 @@
-package user_usecase
+package userusecase
 
 import (
-	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
-	user_domain "github.com/fernan-x/expense-tracker/internal/user/domain"
+	passwordhasher "github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
+	userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
 
 type CreateUserUseCaseInterface interface {
@@ -12,11 +12,11 @@ type CreateUserUseCaseInterface interface {
 var _ CreateUserUseCaseInterface = &CreateUserUseCase{}
 
 type CreateUserUseCase struct {
-	repo user_domain.UserRepository
-	passwordHasher password_hasher.PasswordHasher
+	repo userdomain.UserRepository
+	passwordHasher passwordhasher.PasswordHasher
 }
 
-func NewCreateUserUseCase(repo user_domain.UserRepository, passwordHasher password_hasher.PasswordHasher) *CreateUserUseCase {
+func NewCreateUserUseCase(repo userdomain.UserRepository, passwordHasher passwordhasher.PasswordHasher) *CreateUserUseCase {
 	return &CreateUserUseCase{repo, passwordHasher}
 }
 
@@ -26,7 +26,7 @@ func (u *CreateUserUseCase) Execute(email string, password string, firstName str
 		return err
 	}
 
-	err = u.repo.Create(&user_domain.User{
+	err = u.repo.Create(&userdomain.User{
 		Email: email,
 		Password: string(hash),
 		FirstName: firstName,

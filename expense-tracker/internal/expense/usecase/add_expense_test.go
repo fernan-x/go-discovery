@@ -1,16 +1,16 @@
-package expense_usecase_test
+package expenseusecase_test
 
 import (
 	"testing"
 
-	expense_infra "github.com/fernan-x/expense-tracker/internal/expense/infra"
-	expense_usecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
+	expenseinfra "github.com/fernan-x/expense-tracker/internal/expense/infra"
+	expenseusecase "github.com/fernan-x/expense-tracker/internal/expense/usecase"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAddExpense(t *testing.T) {
-	repo := expense_infra.NewInMemoryExpenseRepository()
-	usecase := expense_usecase.NewAddExpenseUseCase(repo)
+	repo := expenseinfra.NewInMemoryExpenseRepository()
+	usecase := expenseusecase.NewAddExpenseUseCase(repo)
 
 	// Add first expense
 	err := usecase.Execute("Lunch", 12.90)
@@ -34,8 +34,8 @@ func TestAddExpense(t *testing.T) {
 }
 
 func TestAddExpenseWithError(t *testing.T) {
-	repo := expense_infra.NewFailingExpenseRepositoryTest()
-	uc := expense_usecase.NewAddExpenseUseCase(repo)
+	repo := expenseinfra.NewFailingExpenseRepositoryTest()
+	uc := expenseusecase.NewAddExpenseUseCase(repo)
 
 	err := uc.Execute("Lunch", 12.90)
 	assert.Error(t, err)

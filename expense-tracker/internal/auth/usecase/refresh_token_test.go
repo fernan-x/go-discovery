@@ -1,22 +1,22 @@
-package auth_usecase_test
+package authusecase_test
 
 import (
 	"testing"
 	"time"
 
-	auth_domain "github.com/fernan-x/expense-tracker/internal/auth/domain"
-	auth_infra "github.com/fernan-x/expense-tracker/internal/auth/infra"
-	auth_usecase "github.com/fernan-x/expense-tracker/internal/auth/usecase"
-	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
-	token_issuer "github.com/fernan-x/expense-tracker/internal/shared/token-issuer"
+	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	authinfra "github.com/fernan-x/expense-tracker/internal/auth/infra"
+	authusecase "github.com/fernan-x/expense-tracker/internal/auth/usecase"
+	passwordhasher "github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
+	tokenissuer "github.com/fernan-x/expense-tracker/internal/shared/tokenissuer"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"
 )
 
-func setupTest() auth_domain.AuthService {
-	var passwordHasher = &password_hasher.BcryptPasswordHasher{}
-	var tokenIssuer = token_issuer.NewJwtTokenIssuer([]byte("secret"))
-	return auth_infra.NewAuthService(passwordHasher, tokenIssuer)
+func setupTest() authdomain.AuthService {
+	var passwordHasher = &passwordhasher.BcryptPasswordHasher{}
+	var tokenIssuer = tokenissuer.NewJwtTokenIssuer([]byte("secret"))
+	return authinfra.NewAuthService(passwordHasher, tokenIssuer)
 }
 
 func generateExpiredRefreshToken(secret string, userID string) string {
@@ -35,7 +35,7 @@ func generateExpiredRefreshToken(secret string, userID string) string {
 
 func TestRefreshToken_Success(t *testing.T) {
 	authService := setupTest()
-	uc := auth_usecase.NewRefreshTokenUseCase(authService)
+	uc := authusecase.NewRefreshTokenUseCase(authService)
 	refreshToken, _ := authService.GenerateRefreshToken("12345")
 
 	res, err := uc.Execute(refreshToken)
@@ -55,7 +55,7 @@ func TestRefreshToken_Success(t *testing.T) {
 
 func TestRefreshToken_Failure_InvalidToken(t *testing.T) {
 	authService := setupTest()
-	uc := auth_usecase.NewRefreshTokenUseCase(authService)
+	uc := authusecase.NewRefreshTokenUseCase(authService)
 
 	_, err := uc.Execute("invalid-token")
 	assert.Error(t, err)
@@ -64,7 +64,7 @@ func TestRefreshToken_Failure_InvalidToken(t *testing.T) {
 func TestRefreshToken_Failure_ExpiredToken(t *testing.T) {
 	authService := setupTest()
 	expiredToken := generateExpiredRefreshToken("secret", "12345")
-	uc := auth_usecase.NewRefreshTokenUseCase(authService)
+	uc := authusecase.NewRefreshTokenUseCase(authService)
 
 	_, err := uc.Execute(expiredToken)
 	assert.Error(t, err)

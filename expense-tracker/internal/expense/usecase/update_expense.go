@@ -1,26 +1,26 @@
-package expense_usecase
+package expenseusecase
 
 import (
 	"errors"
 
-	expense_domain "github.com/fernan-x/expense-tracker/internal/expense/domain"
+	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 )
 
 type UpdateExpenseUseCaseInterface interface {
-	Execute(id string, input expense_domain.ExpenseUpdateFields) error
+	Execute(id string, input expensedomain.ExpenseUpdateFields) error
 }
 
 var _ UpdateExpenseUseCaseInterface = &UpdateExpenseUseCase{}
 
 type UpdateExpenseUseCase struct {
-	repo expense_domain.ExpenseRepository
+	repo expensedomain.ExpenseRepository
 }
 
-func NewUpdateExpenseUseCase(repo expense_domain.ExpenseRepository) *UpdateExpenseUseCase {
+func NewUpdateExpenseUseCase(repo expensedomain.ExpenseRepository) *UpdateExpenseUseCase {
 	return &UpdateExpenseUseCase{repo}
 }
 
-func (u *UpdateExpenseUseCase) Execute(id string, input expense_domain.ExpenseUpdateFields) error {
+func (u *UpdateExpenseUseCase) Execute(id string, input expensedomain.ExpenseUpdateFields) error {
 	if input.Title != nil && *input.Title == "" {
 		return errors.New("Title cannot be empty")
 	}
