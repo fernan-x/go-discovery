@@ -15,7 +15,7 @@ func TestGetExpenseById_Failure(t *testing.T) {
 	uc := expenseusecase.NewGetExpenseByIdUseCase(repo)
 
 	e, err := uc.Execute("1")
-	assert.Equal(t, "Element with id 1 not found", err.Error())
+	assert.Equal(t, "element with id 1 not found", err.Error())
 	assert.Error(t, err)
 	assert.Nil(t, e)
 }

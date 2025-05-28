@@ -16,7 +16,7 @@ func TestGetUserByEmailUsecase_Failing(t *testing.T) {
 
 	_, err := uc.Execute("jean.dupont@test.com")
 	assert.Error(t, err)
-	assert.Equal(t, "User with email jean.dupont@test.com not found", err.Error())
+	assert.Equal(t, "user with email jean.dupont@test.com not found", err.Error())
 }
 
 func TestGetUserByEmailUsecase_Success(t *testing.T) {
@@ -42,5 +42,5 @@ func TestGetUserByEmailUsecase_Failure_UserNotFound(t *testing.T) {
 
 	_, err = uc.Execute("jean.dupont2@test.com")
 	assert.Error(t, err)
-	assert.Equal(t, "User with email jean.dupont2@test.com not found", err.Error())
+	assert.Equal(t, "user with email jean.dupont2@test.com not found", err.Error())
 }

@@ -2,7 +2,7 @@ package expensehttp_test
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -20,7 +20,7 @@ func (u *mockDeleteExpenseSuccessUseCase) Execute(id string) error {
 }
 type mockDeleteExpenseFailureUseCase struct {}
 func (u *mockDeleteExpenseFailureUseCase) Execute(id string) error {
-	return errors.New("Not found")
+	return fmt.Errorf("not found")
 }
 
 func setupDeleteExpenseHandler(uc expenseusecase.DeleteExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {
@@ -65,5 +65,5 @@ func TestDeleteExpense_Failure_EmptyParameter(t *testing.T) {
 
 	assert.Equal(t, http.StatusNotFound, w.Code)
 	assert.Equal(t, "error", res.Status)
-	assert.Contains(t, res.Error, "Not found")
+	assert.Contains(t, res.Error, "not found")
 }

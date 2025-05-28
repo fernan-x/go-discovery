@@ -3,7 +3,7 @@ package expensehttp_test
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -21,7 +21,7 @@ func (u *mockAddExpenseSuccessUseCase) Execute(title string, amount float64) err
 }
 type mockAddExpenseFailureUseCase struct {}
 func (u *mockAddExpenseFailureUseCase) Execute(title string, amount float64) error {
-	return errors.New("something went wrong")
+	return fmt.Errorf("something went wrong")
 }
 
 func setupAddExpenseHandler(uc expenseusecase.AddExpenseUseCaseInterface) (*gin.Engine, *httptest.ResponseRecorder) {

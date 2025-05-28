@@ -1,7 +1,7 @@
 package userinfra
 
 import (
-	"errors"
+	"fmt"
 
 	userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
@@ -34,5 +34,5 @@ func (r *InMemoryUserRepository) GetByEmail(email string) (*userdomain.User, err
 		}
 	}
 
-	return nil, errors.New("User with email " + email + " not found")
+	return nil, fmt.Errorf("user with email %s not found", email)
 }

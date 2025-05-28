@@ -1,7 +1,7 @@
 package expenseinfra
 
 import (
-	"errors"
+	"fmt"
 
 	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 )
@@ -36,7 +36,7 @@ func (r *InMemoryExpenseRepository) Delete(id string) error {
 		}
 	}
 
-	return errors.New("Element with id " + id + " not found")
+	return fmt.Errorf("element with id %s not found", id)
 }
 
 func applyUpdate(e *expensedomain.Expense, fields expensedomain.ExpenseUpdateFields) {
@@ -57,7 +57,7 @@ func (r *InMemoryExpenseRepository) Update(id string, fields expensedomain.Expen
 		}
 	}
 
-	return errors.New("Element with id " + id + " not found")
+	return fmt.Errorf("element with id %s not found", id)
 }
 
 func (r *InMemoryExpenseRepository) GetByID(id string) (*expensedomain.Expense, error) {
@@ -67,5 +67,5 @@ func (r *InMemoryExpenseRepository) GetByID(id string) (*expensedomain.Expense, 
 		}
 	}
 
-	return nil, errors.New("Element with id " + id + " not found")
+	return nil, fmt.Errorf("element with id %s not found", id)
 }

@@ -1,7 +1,7 @@
 package authinfra
 
 import (
-	"errors"
+	"fmt"
 
 	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
 )
@@ -25,7 +25,7 @@ func (r *InMemoryPasswordResetTokenRepository) Save(token authdomain.PasswordRes
 func (r *InMemoryPasswordResetTokenRepository) GetByToken(token string) (*authdomain.PasswordResetToken, error) {
 	t, ok := r.tokens[token]
 	if !ok {
-		return nil, errors.New("Token not found")
+		return nil, fmt.Errorf("token not found")
 	}
 
 	return &t, nil

@@ -25,7 +25,7 @@ func TestRequestPasswordReset_Failure_EmailNotFound(t *testing.T) {
 
 	_, err := uc.Execute("jean.dupont@test.com")
 	assert.Error(t, err)
-	assert.Equal(t, "User with email jean.dupont@test.com not found", err.Error())
+	assert.Equal(t, "user with email jean.dupont@test.com not found", err.Error())
 }
 
 func TestRequestPasswordReset_Success(t *testing.T) {

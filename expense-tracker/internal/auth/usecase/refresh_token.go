@@ -1,7 +1,7 @@
 package authusecase
 
 import (
-	"errors"
+	"fmt"
 
 	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
 )
@@ -34,17 +34,17 @@ func (u *RefreshTokenUseCase) Execute(refreshToken string) (RefreshTokenResponse
 
 	userId, ok := claims["sub"].(string)
 	if !ok {
-		return res, errors.New("Could not parse user id")
+		return res, fmt.Errorf("could not parse user id")
 	}
 
 	accessToken, err := u.authService.GenerateAccessToken(userId)
 	if err != nil {
-		return res, errors.New("Could not generate access token: " + err.Error())
+		return res, fmt.Errorf("could not generate access token: %s", err.Error())
 	}
 
 	refreshToken, err = u.authService.GenerateRefreshToken(userId)
 	if err != nil {
-		return res, errors.New("Could not generate refresh token: " + err.Error())
+		return res, fmt.Errorf("could not generate refresh token: %s", err.Error())
 	}
 
 	res.AccessToken = accessToken

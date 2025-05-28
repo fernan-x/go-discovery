@@ -38,7 +38,7 @@ func TestLogin_Failure_NotFound(t *testing.T) {
 
 	_, err := uc.Execute("jean.dupont2@test.com", "123456")
 	assert.Error(t, err)
-	assert.Equal(t, "Invalid credentials", err.Error())
+	assert.Equal(t, "invalid credentials", err.Error())
 }
 
 func TestLogin_Failure_PasswordMissMatch(t *testing.T) {
@@ -48,7 +48,7 @@ func TestLogin_Failure_PasswordMissMatch(t *testing.T) {
 
 	_, err := uc.Execute("jean.dupont@test.com", "12345")
 	assert.Error(t, err)
-	assert.Equal(t, "Invalid credentials", err.Error())
+	assert.Equal(t, "invalid credentials", err.Error())
 }
 
 func TestLogin_Success(t *testing.T) {

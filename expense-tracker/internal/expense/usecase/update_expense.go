@@ -1,7 +1,7 @@
 package expenseusecase
 
 import (
-	"errors"
+	"fmt"
 
 	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
 )
@@ -22,11 +22,11 @@ func NewUpdateExpenseUseCase(repo expensedomain.ExpenseRepository) *UpdateExpens
 
 func (u *UpdateExpenseUseCase) Execute(id string, input expensedomain.ExpenseUpdateFields) error {
 	if input.Title != nil && *input.Title == "" {
-		return errors.New("Title cannot be empty")
+		return fmt.Errorf("title cannot be empty")
 	}
 
 	if input.Amount != nil && *input.Amount <= 0 {
-		return errors.New("Amount cannot be less than or equal to 0")
+		return fmt.Errorf("amount cannot be less than or equal to 0")
 	}
 
 	return u.repo.Update(id, input)

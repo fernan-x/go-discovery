@@ -23,7 +23,7 @@ func TestUpdateExpense_Failure_TitleRequired(t *testing.T) {
 		Title: &emptyTitle,
 	})
 	assert.Error(t, err)
-	assert.Equal(t, "Title cannot be empty", err.Error())
+	assert.Equal(t, "title cannot be empty", err.Error())
 }
 
 func TestUpdateExpense_Failure_AmountLessThanZero(t *testing.T) {
@@ -34,7 +34,7 @@ func TestUpdateExpense_Failure_AmountLessThanZero(t *testing.T) {
 		Amount: &negativeAmount,
 	})
 	assert.Error(t, err)
-	assert.Equal(t, "Amount cannot be less than or equal to 0", err.Error())
+	assert.Equal(t, "amount cannot be less than or equal to 0", err.Error())
 }
 
 func TestUpdateExpense_Failure_AmountEqualZero(t *testing.T) {
@@ -45,7 +45,7 @@ func TestUpdateExpense_Failure_AmountEqualZero(t *testing.T) {
 		Amount: &negativeAmount,
 	})
 	assert.Error(t, err)
-	assert.Equal(t, "Amount cannot be less than or equal to 0", err.Error())
+	assert.Equal(t, "amount cannot be less than or equal to 0", err.Error())
 }
 
 func TestUpdateExpense_Success_TwoFields(t *testing.T) {

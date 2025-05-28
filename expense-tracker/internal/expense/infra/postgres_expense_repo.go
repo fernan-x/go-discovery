@@ -1,7 +1,6 @@
 package expenseinfra
 
 import (
-	"errors"
 	"fmt"
 
 	expensedomain "github.com/fernan-x/expense-tracker/internal/expense/domain"
@@ -51,9 +50,9 @@ func (r *PostgresExpenseRepository) Delete(id string) error {
 }
 
 func (r *PostgresExpenseRepository) Update(id string, fields expensedomain.ExpenseUpdateFields) error {
-	return errors.New("Not implemented")
+	return fmt.Errorf("not implemented")
 }
 
 func (r *PostgresExpenseRepository) GetByID(id string) (*expensedomain.Expense, error) {
-	return nil, errors.New("Not implemented")
+	return nil, fmt.Errorf("not implemented")
 }
