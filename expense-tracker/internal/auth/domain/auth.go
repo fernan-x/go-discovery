@@ -2,5 +2,6 @@ package auth_domain
 
 type AuthService interface {
 	VerifyPassword(password string, hash string) error
-	GenerateToken(userId string) (string, error)
+	GenerateAccessToken(userId string) (string, error)
+	GenerateRefreshToken(userId string) (string, error)
 }

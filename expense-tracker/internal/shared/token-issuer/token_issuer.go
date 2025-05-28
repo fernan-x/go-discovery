@@ -1,6 +1,7 @@
 package token_issuer
 
 type TokenIssuer interface {
-	Generate(userId string) (string, error)
+	GenerateAccessToken(userId string) (string, error)
+	GenerateRefreshToken(userId string) (string, error)
 	Parse(token string) (map[string]any, error)
 }

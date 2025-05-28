@@ -21,6 +21,10 @@ func (s *AuthServiceImpl) VerifyPassword(password string, hash string) error {
 	return s.passwordHasher.Verify(password, hash)
 }
 
-func (s *AuthServiceImpl) GenerateToken(userId string) (string, error) {
-	return s.tokenIssuer.Generate(userId)
+func (s *AuthServiceImpl) GenerateAccessToken(userId string) (string, error) {
+	return s.tokenIssuer.GenerateAccessToken(userId)
+}
+
+func (s *AuthServiceImpl) GenerateRefreshToken(userId string) (string, error) {
+	return s.tokenIssuer.GenerateRefreshToken(userId)
 }

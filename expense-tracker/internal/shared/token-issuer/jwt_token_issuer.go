@@ -16,12 +16,35 @@ func NewJwtTokenIssuer(secret []byte) *JwtTokenIssuer {
 	return &JwtTokenIssuer{secret}
 }
 
-func (t *JwtTokenIssuer) Generate(userId string) (string, error) {
+func generateToken(claims jwt.Claims, secret []byte) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(secret)
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
+func (t *JwtTokenIssuer) GenerateAccessToken(userId string) (string, error) {
 	claims := jwt.MapClaims{
 		"sub": userId,
 		"iat": time.Now().Unix(),
-		"exp": time.Now().Add(time.Hour * 24).Unix(), // 24 hours
-		"iss": "Expense Tracker",
+		"exp": time.Now().Add(time.Hour * 1).Unix(), // 1 hours
+		"iss": "expense-tracker",
+		"type": "access",
+	}
+
+	return generateToken(claims, t.secret)
+}
+
+func (t *JwtTokenIssuer) GenerateRefreshToken(userId string) (string, error) {
+	claims := jwt.MapClaims{
+		"sub": userId,
+		"iat": time.Now().Unix(),
+		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(), // 30 days
+		"iss": "expense-tracker",
+		"type": "refresh",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

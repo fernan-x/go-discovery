@@ -59,4 +59,6 @@ func TestLogin_Success(t *testing.T) {
 	token, err := uc.Execute("jean.dupont@test.com", "123456")
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token)
+	assert.NotEmpty(t, token.AccessToken)
+	assert.NotEmpty(t, token.RefreshToken)
 }

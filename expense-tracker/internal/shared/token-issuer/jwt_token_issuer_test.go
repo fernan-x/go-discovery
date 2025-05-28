@@ -11,8 +11,8 @@ import (
 var secret = []byte("secret")
 var jti = token_issuer.NewJwtTokenIssuer(secret)
 
-func TestJwtTokenIssuer_Generate_Success(t *testing.T) {
-	token, err := jti.Generate("12345")
+func TestJwtTokenIssuer_GenerateAccessToken_Success(t *testing.T) {
+	token, err := jti.GenerateAccessToken("12345")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,7 +30,33 @@ func TestJwtTokenIssuer_Generate_Success(t *testing.T) {
 	}
 
 	assert.Equal(t, "12345", claims["sub"])
-	assert.Equal(t, "Expense Tracker", claims["iss"])
+	assert.Equal(t, "expense-tracker", claims["iss"])
+	assert.Equal(t, "access", claims["type"])
+	assert.NotEmpty(t, claims["iat"])
+	assert.NotEmpty(t, claims["exp"])
+}
+
+func TestJwtTokenIssuer_GenerateRefreshToken_Success(t *testing.T) {
+	token, err := jti.GenerateRefreshToken("12345")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	jwtDecoded, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
+		return secret, nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	claims, ok := jwtDecoded.Claims.(jwt.MapClaims)
+	if !ok {
+		t.Fatal("Could not parse claims")
+	}
+
+	assert.Equal(t, "12345", claims["sub"])
+	assert.Equal(t, "expense-tracker", claims["iss"])
+	assert.Equal(t, "refresh", claims["type"])
 	assert.NotEmpty(t, claims["iat"])
 	assert.NotEmpty(t, claims["exp"])
 }
