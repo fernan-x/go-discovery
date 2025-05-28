@@ -1,6 +1,9 @@
 package token_issuer
 
 import (
+	"crypto/rand"
+	"encoding/base64"
+	"io"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -65,4 +68,13 @@ func (t *JwtTokenIssuer) Parse(token string) (map[string]any, error) {
 	}
 
 	return jwtDecoded.Claims.(jwt.MapClaims), nil
+}
+
+func (t *JwtTokenIssuer) GenerateRandomToken(size int) (string, error) {
+	randomBytes := make([]byte, size)
+	_, err := io.ReadFull(rand.Reader, randomBytes)
+	if err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(randomBytes), nil
 }
