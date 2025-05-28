@@ -1,7 +1,7 @@
 package user_usecase
 
 import (
-	password_hasher "github.com/fernan-x/expense-tracker/internal/password-hasher"
+	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
 	user_domain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
 

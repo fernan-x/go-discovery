@@ -33,7 +33,10 @@ func (u *LoginUseCase) Execute(email string, password string) (string, error) {
 		return "", errors.New("Invalid credentials")
 	}
 
-	// TODO: Generate a token
+	token, err := u.authService.GenerateToken(user.ID)
+	if err != nil {
+		return "", errors.New("Could not generate token: " + err.Error())
+	}
 
-	return "xxxx", nil
+	return token, nil
 }

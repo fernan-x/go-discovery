@@ -1,11 +1,12 @@
 package auth_usecase_test
 
 import (
+	"fmt"
 	"testing"
 
 	auth_infra "github.com/fernan-x/expense-tracker/internal/auth/infra"
 	auth_usecase "github.com/fernan-x/expense-tracker/internal/auth/usecase"
-	password_hasher "github.com/fernan-x/expense-tracker/internal/password-hasher"
+	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
 	user_infra "github.com/fernan-x/expense-tracker/internal/user/infra"
 	user_usecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
 	"github.com/stretchr/testify/assert"
@@ -39,16 +40,6 @@ func TestLogin_Failure_NotFound(t *testing.T) {
 	assert.Equal(t, "Invalid credentials", err.Error())
 }
 
-func TestLogin_Success(t *testing.T) {
-	initTestData()
-
-	uc := auth_usecase.NewLoginUseCase(userRepo, authService)
-
-	token, err := uc.Execute("jean.dupont@test.com", "123456")
-	assert.NoError(t, err)
-	assert.Equal(t, "xxxx", token)
-}
-
 func TestLogin_Failure_PasswordMissMatch(t *testing.T) {
 	initTestData()
 
@@ -57,4 +48,15 @@ func TestLogin_Failure_PasswordMissMatch(t *testing.T) {
 	_, err := uc.Execute("jean.dupont@test.com", "12345")
 	assert.Error(t, err)
 	assert.Equal(t, "Invalid credentials", err.Error())
+}
+
+func TestLogin_Success(t *testing.T) {
+	initTestData()
+
+	uc := auth_usecase.NewLoginUseCase(userRepo, authService)
+
+	token, err := uc.Execute("jean.dupont@test.com", "123456")
+	assert.NoError(t, err)
+	fmt.Printf("Token: %s\n", token)
+	assert.NotEmpty(t, token)
 }

@@ -3,7 +3,7 @@ package user_usecase_test
 import (
 	"testing"
 
-	password_hasher "github.com/fernan-x/expense-tracker/internal/password-hasher"
+	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
 	user_infra "github.com/fernan-x/expense-tracker/internal/user/infra"
 	user_usecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
 	"github.com/stretchr/testify/assert"
