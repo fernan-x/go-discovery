@@ -1,12 +1,12 @@
 package auth_usecase_test
 
 import (
-	"fmt"
 	"testing"
 
 	auth_infra "github.com/fernan-x/expense-tracker/internal/auth/infra"
 	auth_usecase "github.com/fernan-x/expense-tracker/internal/auth/usecase"
 	password_hasher "github.com/fernan-x/expense-tracker/internal/shared/password-hasher"
+	token_issuer "github.com/fernan-x/expense-tracker/internal/shared/token-issuer"
 	user_infra "github.com/fernan-x/expense-tracker/internal/user/infra"
 	user_usecase "github.com/fernan-x/expense-tracker/internal/user/usecase"
 	"github.com/stretchr/testify/assert"
@@ -14,7 +14,8 @@ import (
 
 var userRepo = user_infra.NewInMemoryUserRepository()
 var passwordHasher = &password_hasher.BcryptPasswordHasher{}
-var authService = auth_infra.NewAuthService(passwordHasher)
+var tokenIssuer = token_issuer.NewJwtTokenIssuer([]byte("secret"))
+var authService = auth_infra.NewAuthService(passwordHasher, tokenIssuer)
 var isInit = false
 
 // Insert first user in repository only once
@@ -57,6 +58,5 @@ func TestLogin_Success(t *testing.T) {
 
 	token, err := uc.Execute("jean.dupont@test.com", "123456")
 	assert.NoError(t, err)
-	fmt.Printf("Token: %s\n", token)
 	assert.NotEmpty(t, token)
 }
