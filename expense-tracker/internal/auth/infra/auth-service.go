@@ -28,3 +28,7 @@ func (s *AuthServiceImpl) GenerateAccessToken(userId string) (string, error) {
 func (s *AuthServiceImpl) GenerateRefreshToken(userId string) (string, error) {
 	return s.tokenIssuer.GenerateRefreshToken(userId)
 }
+
+func (s *AuthServiceImpl) ParseToken(token string) (map[string]any, error) {
+	return s.tokenIssuer.Parse(token)
+}
