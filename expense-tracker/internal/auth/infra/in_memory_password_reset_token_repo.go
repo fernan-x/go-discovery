@@ -30,3 +30,8 @@ func (r *InMemoryPasswordResetTokenRepository) GetByToken(token string) (*authdo
 
 	return &t, nil
 }
+
+func (r *InMemoryPasswordResetTokenRepository) Delete(token string) error {
+	delete(r.tokens, token)
+	return nil
+}

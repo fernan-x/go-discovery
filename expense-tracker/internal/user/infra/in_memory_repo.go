@@ -36,3 +36,27 @@ func (r *InMemoryUserRepository) GetByEmail(email string) (*userdomain.User, err
 
 	return nil, fmt.Errorf("user with email %s not found", email)
 }
+
+func updateFields(u *userdomain.User, fields userdomain.UserUpdateFields) {
+	if fields.FirstName != nil {
+		u.FirstName = *fields.FirstName
+	}
+	if fields.LastName != nil {
+		u.LastName = *fields.LastName
+	}
+	if fields.Password != nil {
+		u.Password = *fields.Password
+	}
+}
+
+func (r *InMemoryUserRepository) Update(userId string, fields userdomain.UserUpdateFields) error {
+	for i, u := range r.users {
+		if u.ID == userId {
+			updateFields(&u, fields)
+			r.users[i] = u
+			return nil
+		}
+	}
+
+	return fmt.Errorf("user with id %s not found", userId)
+}

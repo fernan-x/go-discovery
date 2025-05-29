@@ -5,6 +5,7 @@ import (
 	"time"
 
 	authdomain "github.com/fernan-x/expense-tracker/internal/auth/domain"
+	"github.com/fernan-x/expense-tracker/internal/shared/passwordhasher"
 	userdomain "github.com/fernan-x/expense-tracker/internal/user/domain"
 )
 
@@ -18,21 +19,19 @@ type ResetPasswordUsecase struct {
 	authService authdomain.AuthService
 	userRepo    userdomain.UserRepository
 	tokenRepo   authdomain.PasswordResetTokenRepository
+	pwdHasher   passwordhasher.PasswordHasher
 }
 
 func NewResetPasswordUsecase(
 	authService authdomain.AuthService,
 	userRepo userdomain.UserRepository,
 	tokenRepo authdomain.PasswordResetTokenRepository,
+	pwdHasher passwordhasher.PasswordHasher,
 ) *ResetPasswordUsecase {
-	return &ResetPasswordUsecase{authService, userRepo, tokenRepo}
+	return &ResetPasswordUsecase{authService, userRepo, tokenRepo, pwdHasher}
 }
 
 func (u *ResetPasswordUsecase) Execute(resetToken string, newPassword string) error {
-	// 1️⃣ Input:
-	// resetToken (string)
-	// newPassword (string)
-
 	t, err := u.tokenRepo.GetByToken(resetToken)
 	if err != nil {
 		return fmt.Errorf("invalid reset token")
@@ -42,11 +41,19 @@ func (u *ResetPasswordUsecase) Execute(resetToken string, newPassword string) er
 		return fmt.Errorf("reset token expired")
 	}
 
-	// 4️⃣ Hash the new password (using bcrypt or AuthService.HashPassword)
-	// 5️⃣ Update the user’s password in the database
-	// 6️⃣ Delete or invalidate the reset token (for security!)
-	// userId := t.UserId
+	hash, err := u.pwdHasher.Hash(newPassword)
+	if err != nil {
+		return err
+	}
 
+	err = u.userRepo.Update(t.UserId, userdomain.UserUpdateFields{
+		Password: &hash,
+	})
+	if err != nil {
+		return err
+	}
 
-	return fmt.Errorf("not implemented")
+	u.tokenRepo.Delete(resetToken)
+
+	return nil
 }

@@ -11,4 +11,5 @@ type PasswordResetToken struct {
 type PasswordResetTokenRepository interface {
 	Save(token PasswordResetToken) error
 	GetByToken(token string) (*PasswordResetToken, error)
+	Delete(token string) error
 }
